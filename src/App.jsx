@@ -1,9 +1,18 @@
-import "./App.css";
+import { Suspense, lazy } from "react";
+import { Routes, Route } from "react-router-dom";
+import Header from "./components/Header/Header";
+
+const HomePage = lazy(() => import("./pages/Home/Home"));
 
 function App() {
   return (
     <>
-      <h1>Hello World</h1>
+      <Header />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </Suspense>
     </>
   );
 }

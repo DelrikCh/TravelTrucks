@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  padding: 24px 200px 24px 64px;
+  border-bottom: 1px solid rgba(242, 244, 247, 1);
+  background: rgba(247, 247, 247, 1);
+}
+
+.logo {
+  margin: auto 0;
+}
+
+.menu {
+  display: flex;
+  gap: 32px;
+}
+
+.menuNav {
+  margin: auto;
+}
+
+.menuItem {
+  composes: body-2 from '../../index.css';
+}
+
+.menuItemActive {
+  color: var(--button);
+}
+
+.menuItem:hover {
+  color: var(--button-hover);
+}

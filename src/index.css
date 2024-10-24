@@ -13,15 +13,6 @@ p:last-child {
   margin-bottom: 0;
 }
 
-body {
-  padding: 0px auto;
-}
-
-#root {
-  max-width: 480px;
-  margin: auto;
-}
-
 ul {
   margin: 0;
   padding: 0;
@@ -41,4 +32,61 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+body {
+  margin: 0;
+}
+
+/* Fonts */
+/* Intentionally set it to body tag to make this style as a default */
+body {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.body-2 {
+  font-weight: 500;
+  text-align: center;
+}
+
+.body-underline {
+  text-decoration: underline;
+}
+
+.h1 {
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 0.66;
+}
+
+.h2 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.33;
+}
+
+.h3 {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.button {
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+/* Variables */
+:root {
+  --main: #101828;
+  --text: #475467;
+  --gray: #6c717b;
+  --button: #e44848;
+  --button-hover: #d84343;
+  --rating: #ffc531;
+  --gray-light: #dadde1;
 }
