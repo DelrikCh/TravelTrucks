@@ -1,6 +1,8 @@
 import styles from "./Header.module.css";
 
-import TitleLogo from "../../assets/Title.svg";
+import TitleLogo from "../../assets/svg/Title.svg";
+
+import { useLocation } from "react-router-dom";
 
 function Logo() {
   return (
@@ -11,12 +13,13 @@ function Logo() {
 }
 
 function Menu() {
+  const location = useLocation();
+  const currentPath = location.pathname;
   let menuItems = [
     { name: "Home", link: "/", active: false },
     { name: "Catalog", link: "/catalog", active: false },
   ];
   // Set active to true for the current page
-  let currentPath = window.location.pathname;
   menuItems = menuItems.map((item) => {
     if (item.link === currentPath) {
       item.active = true;
