@@ -123,15 +123,13 @@ function Location() {
           types: ["(cities)"],
         }}
       >
-        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+        {({ getInputProps, suggestions, getSuggestionItemProps }) => (
           <div style={{ position: "relative" }}>
             <input
               className={styles.locationInput}
               {...getInputProps({ placeholder: "City" })}
               id="location"
             />
-
-            {loading && <div>...loading</div>}
 
             {suggestions.length > 0 && (
               <div className={styles.locationSuggestionsContainer}>
