@@ -10,7 +10,15 @@ function VehicleType() {}
 
 function VehicleEquipment() {}
 
-function Filters() {}
+function Filters() {
+  return (
+    <>
+      <Location />
+      <VehicleType />
+      <VehicleEquipment />
+    </>
+  );
+}
 
 function Location() {
   const dispatch = useDispatch();
@@ -71,9 +79,11 @@ function Catalog() {
   return (
     <div className={styles.catalog}>
       <div className={styles.catalogLeft}>
-        <Location />
+        <Filters />
       </div>
-      <div className={styles.catalogRight}></div>
+      <div className={styles.catalogRight}>
+        <VehicleList />
+      </div>
     </div>
   );
 }

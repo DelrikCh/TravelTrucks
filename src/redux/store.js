@@ -31,6 +31,10 @@ const store = configureStore({
     favoriteVehicles: persistedFavoriteVehiclesReducer,
     filters: persistedFiltersReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export const persistor = persistStore(store);

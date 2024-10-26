@@ -25,6 +25,7 @@
 
 .locationInput {
     width: 360px;
+    box-sizing: border-box;
     border-radius: 12px;
     border: none;
     background-color: rgba(247, 247, 247, 1);
@@ -32,6 +33,5 @@
 }
 
 .locationSuggestions {
-    padding-left: 16px;
-    width: 360px;
+    padding-left: 20px;
 }
