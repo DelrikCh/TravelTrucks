@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import PlacesAutocomplete from "react-places-autocomplete";
-import Button from "../../components/Button/Button";
 
+import Button from "../../components/Button/Button";
 import styles from "./Catalog.module.css";
 import {
   setLocation,
@@ -11,6 +11,8 @@ import {
   removeType,
 } from "../../redux/filtersSlice";
 import Checkbox from "../../components/Checkbox/Checkbox";
+import { fetchCampers } from "../../services/apiService";
+import { setVehiclesList } from "../../redux/vehiclesSlice";
 
 function VehicleList() {}
 
@@ -80,11 +82,17 @@ function VehicleEquipment() {
   );
 }
 
-function performSearch() {
-  console.log("Performing search");
-}
-
 function Filters() {
+  const dispatch = useDispatch();
+  const searchFunc = () => {
+    try {
+      fetchCampers().then((res) => {
+        dispatch(setVehiclesList(res.data.items));
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <>
       <Location />
@@ -95,7 +103,7 @@ function Filters() {
         <Button
           text="Search"
           className={styles.searchButton}
-          onClick={performSearch}
+          onClick={searchFunc}
         />
       </div>
     </>
