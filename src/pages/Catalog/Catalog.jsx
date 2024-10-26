@@ -1,44 +1,36 @@
 import { useDispatch, useSelector } from "react-redux";
 import PlacesAutocomplete from "react-places-autocomplete";
+import Button from "../../components/Button/Button";
 
 import styles from "./Catalog.module.css";
 import {
   setLocation,
   addEquipment,
   removeEquipment,
+  addType,
+  removeType,
 } from "../../redux/filtersSlice";
 import Checkbox from "../../components/Checkbox/Checkbox";
 
 function VehicleList() {}
 
-function VehicleType() {}
-
-function VehicleEquipment() {
+function Filter({ data, icons_texts, addFilter, removeFilter, title }) {
   const dispatch = useDispatch();
-  const equipment = useSelector((state) => state.filters.equipment);
-  // AC, Automatic, Kitchen, TV, Bathroom
-  const icons_text = [
-    { icon: "ac", text: "AC" },
-    { icon: "automatic", text: "Automatic" },
-    { icon: "kitchen", text: "Kitchen" },
-    { icon: "tv", text: "TV" },
-    { icon: "bathroom", text: "Bathroom" },
-  ];
   return (
-    <div className={styles.equipmentFilters}>
-      <h3 className={styles.equipmentTitle}>Vehicle equipment</h3>
+    <div className={styles.filters}>
+      <h3 className={styles.filtersTitle}>{title}</h3>
       <hr className={styles.divider} />
-      <ul className={styles.equipmentList}>
-        {icons_text.map(({ icon, text }) => (
+      <ul className={styles.filtersList}>
+        {icons_texts.map(({ icon, text }) => (
           <li key={icon}>
             <Checkbox
               text={text}
               icon={icon}
-              checked={equipment.includes(text)}
+              checked={data.includes(text)}
               onChange={(checked) =>
                 checked
-                  ? dispatch(addEquipment(text))
-                  : dispatch(removeEquipment(text))
+                  ? dispatch(addFilter(text))
+                  : dispatch(removeFilter(text))
               }
             />
           </li>
@@ -46,6 +38,50 @@ function VehicleEquipment() {
       </ul>
     </div>
   );
+}
+
+function VehicleType() {
+  const type = useSelector((state) => state.filters.type);
+  // Van, Fully Integrated, Alcove
+  const icons_texts = [
+    { icon: "van", text: "Van" },
+    { icon: "fully_integrated", text: "Fully Integrated" },
+    { icon: "alcove", text: "Alcove" },
+  ];
+  return (
+    <Filter
+      data={type}
+      icons_texts={icons_texts}
+      addFilter={addType}
+      removeFilter={removeType}
+      title="Vehicle type"
+    />
+  );
+}
+
+function VehicleEquipment() {
+  const equipment = useSelector((state) => state.filters.equipment);
+  // AC, Automatic, Kitchen, TV, Bathroom
+  const icons_texts = [
+    { icon: "ac", text: "AC" },
+    { icon: "automatic", text: "Automatic" },
+    { icon: "kitchen", text: "Kitchen" },
+    { icon: "tv", text: "TV" },
+    { icon: "bathroom", text: "Bathroom" },
+  ];
+  return (
+    <Filter
+      data={equipment}
+      icons_texts={icons_texts}
+      addFilter={addEquipment}
+      removeFilter={removeEquipment}
+      title="Vehicle equipment"
+    />
+  );
+}
+
+function performSearch() {
+  console.log("Performing search");
 }
 
 function Filters() {
@@ -56,6 +92,11 @@ function Filters() {
       <div id="filters" className={styles.filters}>
         <VehicleEquipment />
         <VehicleType />
+        <Button
+          text="Search"
+          className={styles.searchButton}
+          onClick={performSearch}
+        />
       </div>
     </>
   );

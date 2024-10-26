@@ -1,6 +1,6 @@
 .home {
-    background-image: url('../../assets/jpg/Picture.jpg');
-    padding: 260px 0px 260px 64px;
+  background-image: url("../../assets/jpg/Picture.jpg");
+  padding: 260px 0px 260px 64px;
 }
 
 .text {
@@ -10,12 +10,12 @@
 }
 
 .textTitle {
-  composes: h1 from '../../index.css';
+  composes: h1 from "../../index.css";
   color: var(--inputs);
 }
 
 .textDescription {
-  composes: h2 from '../../index.css';
+  composes: h2 from "../../index.css";
   color: var(--inputs);
 }
 

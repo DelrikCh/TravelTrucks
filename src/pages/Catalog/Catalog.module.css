@@ -48,21 +48,21 @@
 }
 
 .filtersLabel {
-  composes: body-2 from '../../index.css';
+  composes: body-2 from "../../index.css";
   color: var(--text);
   margin-top: 40px;
 }
 
-.equipmentFilters {
+.filters {
   margin-top: 32px;
 }
 
-.equipmentTitle {
-  composes: h3 from '../../index.css';
+.filtersTitle {
+  composes: h3 from "../../index.css";
   color: var(--main);
 }
 
-.equipmentList {
+.filtersList {
   /* Make a grid 3x2 */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -76,4 +76,10 @@
   border-top: 1px solid var(--gray-light);
   margin: 24px 0px 0px 0px;
   height: 0px;
+}
+
+.searchButton {
+  width: 166px;
+  height: 56px;
+  margin-top: 40px;
 }

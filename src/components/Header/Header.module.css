@@ -19,7 +19,7 @@
 }
 
 .menuItem {
-  composes: body-2 from '../../index.css';
+  composes: body-2 from "../../index.css";
 }
 
 .menuItemActive {
