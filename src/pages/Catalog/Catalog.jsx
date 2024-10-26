@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./Catalog.module.css";
 
 import PlacesAutocomplete from "react-places-autocomplete";
+import { setLocation } from "../../redux/filtersSlice";
 
 function VehicleList() {}
 
@@ -12,10 +13,11 @@ function VehicleEquipment() {}
 function Filters() {}
 
 function Location() {
-  const [address, setAddress] = useState("");
+  const dispatch = useDispatch();
+  const location = useSelector((state) => state.filters.location);
 
   const handleSelect = async (value) => {
-    setAddress(value);
+    dispatch(setLocation(value));
   };
 
   return (
@@ -24,8 +26,8 @@ function Location() {
         Location
       </label>
       <PlacesAutocomplete
-        value={address}
-        onChange={setAddress}
+        value={location}
+        onChange={(value) => dispatch(setLocation(value))}
         onSelect={handleSelect}
         searchOptions={{
           types: ["(cities)"],
