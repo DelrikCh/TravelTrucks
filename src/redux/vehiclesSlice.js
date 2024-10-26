@@ -1,4 +1,3 @@
-// src/redux/listSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 // A function to generate a reusable slice for any list

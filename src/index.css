@@ -41,7 +41,7 @@ body {
 /* Fonts */
 /* Style 'body'. Intentionally set it to * to have this style as a default */
 * {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
@@ -87,4 +87,7 @@ body {
   --button-hover: #d84343;
   --rating: #ffc531;
   --gray-light: #dadde1;
+  --badges: #f2f4f7;
+  --inputs: #f7f7f7;
+  --white: #ffffff;
 }

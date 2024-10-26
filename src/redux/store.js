@@ -1,4 +1,3 @@
-// src/redux/store.js
 import { configureStore } from '@reduxjs/toolkit';
 import listReducer from './vehiclesSlice';
 import filtersReducer from './filtersSlice';

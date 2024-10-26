@@ -1,37 +1,79 @@
 .catalog {
-    display: flex;
-    padding-top: 48px;
-    gap: 64px;
-    justify-content: center;
+  display: flex;
+  padding-top: 48px;
+  gap: 64px;
+  justify-content: center;
 }
 
 .catalogLeft {
-    width: 360px;
+  width: 360px;
 }
 
 .catalogRight {
-    width: 888px;
+  width: 888px;
 }
 
 .locationForm {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .locationLabel {
-    color: var(--gray);
+  color: var(--gray);
 }
 
 .locationInput {
-    width: 360px;
-    box-sizing: border-box;
-    border-radius: 12px;
-    border: none;
-    background-color: rgba(247, 247, 247, 1);
-    padding: 16px 0px 16px 20px;
+  width: 360px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  border: none;
+  background-color: var(--inputs);
+  padding: 16px 0px 16px 20px;
+}
+
+.locationSuggestionsContainer {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: white;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .locationSuggestions {
-    padding-left: 20px;
+  padding-left: 20px;
+}
+
+.filtersLabel {
+  composes: body-2 from '../../index.css';
+  color: var(--text);
+  margin-top: 40px;
+}
+
+.equipmentFilters {
+  margin-top: 32px;
+}
+
+.equipmentTitle {
+  composes: h3 from '../../index.css';
+  color: var(--main);
+}
+
+.equipmentList {
+  /* Make a grid 3x2 */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px 12px;
+
+  margin-top: 24px;
+}
+
+.divider {
+  border: 0px;
+  border-top: 1px solid var(--gray-light);
+  margin: 24px 0px 0px 0px;
+  height: 0px;
 }

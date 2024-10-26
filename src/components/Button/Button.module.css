@@ -3,7 +3,7 @@
   background-color: var(--button);
   padding: 0;
   border: none;
-  color: rgba(255, 255, 255, 1);
+  color: var(--white);
   composes: button from '../../index.css';
 }
 

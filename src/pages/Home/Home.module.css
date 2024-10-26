@@ -11,12 +11,12 @@
 
 .textTitle {
   composes: h1 from '../../index.css';
-  color: rgba(247, 247, 247, 1);
+  color: var(--inputs);
 }
 
 .textDescription {
   composes: h2 from '../../index.css';
-  color: rgba(247, 247, 247, 1);
+  color: var(--inputs);
 }
 
 .button {

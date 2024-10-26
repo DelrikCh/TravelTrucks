@@ -1,13 +1,13 @@
 import styles from "./Header.module.css";
 
-import TitleLogo from "../../assets/svg/Title.svg";
+import SVGProvider from "../../services/SVGProvider";
 
 import { useLocation } from "react-router-dom";
 
 function Logo() {
   return (
     <a href="/" className={styles.logo}>
-      <img src={TitleLogo} alt="Title" />
+      <SVGProvider id={"title"} width="136" height="16" />
     </a>
   );
 }

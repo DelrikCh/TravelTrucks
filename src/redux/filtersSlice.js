@@ -1,28 +1,31 @@
-// src/redux/filtersSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const filtersSlice = createSlice({
   name: 'filters',
   initialState: {
     location: '',
-    equipment: new Set(),
-    type: new Set(),
+    equipment: [],
+    type: [],
   },
   reducers: {
     setLocation: (state, action) => {
       state.location = action.payload;
     },
     addEquipment: (state, action) => {
-      state.equipment.add(action.payload);
+      if (!state.equipment.includes(action.payload)) {
+        state.equipment.push(action.payload);
+      }
     },
     removeEquipment: (state, action) => {
-      state.equipment.delete(action.payload);
+      state.equipment = state.equipment.filter((item) => item !== action.payload);
     },
     addType: (state, action) => {
-      state.type.add(action.payload);
+      if (!state.type.includes(action.payload)) {
+        state.type.push(action.payload);
+      }
     },
     removeType: (state, action) => {
-      state.type.delete(action.payload);
+      state.type = state.type.filter((item) => item !== action.payload);
     },
   },
 });

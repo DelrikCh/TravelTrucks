@@ -1,8 +1,8 @@
 .header {
   display: flex;
   padding: 24px 200px 24px 64px;
-  border-bottom: 1px solid rgba(242, 244, 247, 1);
-  background: rgba(247, 247, 247, 1);
+  border-bottom: 1px solid var(--badges);
+  background: var(--inputs);
 }
 
 .logo {
