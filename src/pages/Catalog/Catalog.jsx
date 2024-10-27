@@ -18,6 +18,7 @@ import { fetchCampers } from "../../services/apiService";
 import { setVehiclesList } from "../../redux/vehiclesSlice";
 import { switchFavorite } from "../../redux/favoriteVehiclesSlice";
 import SVGProvider from "../../services/SVGProvider";
+import { useNavigate } from "react-router-dom";
 
 function VehicleListItem({
   id,
@@ -32,6 +33,7 @@ function VehicleListItem({
 }) {
   price = `€${price}.00`;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const onSwitch = (id) => {
     dispatch(switchFavorite(id));
   };
@@ -80,7 +82,9 @@ function VehicleListItem({
         <Button
           text="Show more"
           className={styles.vehicleListItemButton}
-          onClick={null}
+          onClick={() => {
+            navigate(`/catalog/${id}`);
+          }}
         />
       </div>
     </li>
@@ -362,6 +366,9 @@ function Location() {
 
 function Catalog() {
   const dispatch = useDispatch();
+  const loadMoreButtonHidden = useSelector(
+    (state) => state.filters.page * 4 >= Object.keys(state.vehicles).length
+  );
   return (
     <div className={styles.catalog}>
       <div className={styles.catalogLeft}>
@@ -372,6 +379,7 @@ function Catalog() {
         <button
           className={styles.loadMoreButton}
           onClick={() => dispatch(increasePage())}
+          hidden={loadMoreButtonHidden}
         >
           Load more
         </button>
