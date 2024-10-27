@@ -11,6 +11,8 @@
 
 .catalogRight {
   width: 888px;
+  display: flex;
+  flex-direction: column;
 }
 
 .locationForm {
@@ -82,4 +84,129 @@
   width: 166px;
   height: 56px;
   margin-top: 40px;
+}
+
+.vehicleList {
+  gap: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.vehicleListItem {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid var(--gray-light);
+}
+
+.vehicleListItemImage {
+  width: 292px;
+  height: 320px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.vehicleListItemTitleDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vehicleListItemTitle,
+.vehicleListItemPrice {
+  composes: h2 from "../../index.css";
+  color: var(--main);
+}
+
+.vehicleListItemPrice {
+  margin-left: auto;
+}
+
+.vehicleListItemInfo {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.vehicleListItemRating,
+.vehicleListItemLocation {
+  color: var(--main);
+  margin-left: 4px;
+}
+
+.vehicleListItemDescription {
+  margin-top: 24px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 525px;
+}
+
+.vehicleListItemFilters {
+  margin-top: 24px;
+}
+
+.vehicleListItemButton {
+  width: 166px;
+  height: 56px;
+  margin-top: auto;
+}
+
+.vehicleListItemContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.vehicleListItemFiltersItems {
+  margin-top: 24px;
+  max-width: 524px;
+  max-height: 104px;
+}
+
+.vehicleListItemFavorite {
+  width: 25px;
+  height: 24px;
+}
+
+.vehicleListItemFavoriteSelected {
+  stroke: var(--button);
+  stroke-width: 5%;
+}
+
+.vehicleListItemReviews {
+  width: 16px;
+  height: 16px;
+}
+
+.vehicleListItemLocationIcon {
+  width: 16px;
+  height: 16px;
+  margin-left: 16px;
+}
+
+.favoriteButton {
+  margin-left: 15px;
+  display: inline-flex;
+  background-color: white;
+  padding: 0;
+  width: 25px;
+  height: 24px;
+  border: 0;
+  outline: none;
+}
+
+.loadMoreButton {
+  margin-top: 40px;
+  width: 145px;
+  height: 56px;
+  background-color: var(--white);
+  color: var(--main);
+  border: 1px solid var(--gray-light);
+  border-radius: 200px;
+  opacity: 0px;
+
+  margin: 40px auto 0px auto;
 }

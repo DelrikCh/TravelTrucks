@@ -6,6 +6,7 @@ const filtersSlice = createSlice({
     location: '',
     equipment: [],
     type: [],
+    page: 1,
   },
   reducers: {
     setLocation: (state, action) => {
@@ -27,6 +28,12 @@ const filtersSlice = createSlice({
     removeType: (state, action) => {
       state.type = state.type.filter((item) => item !== action.payload);
     },
+    increasePage: (state) => {
+      state.page += 1;
+    },
+    resetPage: (state) => {
+      state.page = 1;
+    },
   },
 });
 
@@ -37,6 +44,8 @@ export const {
   removeEquipment,
   addType,
   removeType,
+  increasePage,
+  resetPage,
 } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

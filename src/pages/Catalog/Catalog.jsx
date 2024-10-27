@@ -9,12 +9,197 @@ import {
   removeEquipment,
   addType,
   removeType,
+  increasePage,
+  resetPage,
 } from "../../redux/filtersSlice";
 import Checkbox from "../../components/Checkbox/Checkbox";
+import FilterItems from "../../components/FilterItems/FilterItems";
 import { fetchCampers } from "../../services/apiService";
 import { setVehiclesList } from "../../redux/vehiclesSlice";
+import { switchFavorite } from "../../redux/favoriteVehiclesSlice";
+import SVGProvider from "../../services/SVGProvider";
 
-function VehicleList() {}
+function VehicleListItem({
+  id,
+  name,
+  price,
+  rating,
+  reviews,
+  location,
+  description,
+  filters,
+  img,
+}) {
+  price = `€${price}.00`;
+  const dispatch = useDispatch();
+  const onSwitch = (id) => {
+    dispatch(switchFavorite(id));
+  };
+  const favorites = useSelector((state) => state.favoriteVehicles.ids);
+  return (
+    <li className={styles.vehicleListItem}>
+      <img src={img} alt={name} className={styles.vehicleListItemImage} />
+      <div className={styles.vehicleListItemContent}>
+        <div className={styles.vehicleListItemTitleDiv}>
+          <h2 className={styles.vehicleListItemTitle}>{name}</h2>
+          <h2 className={styles.vehicleListItemPrice}>{price}</h2>
+          <button
+            className={styles.favoriteButton}
+            onClick={() => onSwitch(id)}
+          >
+            <SVGProvider
+              id="favorite"
+              className={`${styles.vehicleListItemFavorite} ${
+                favorites.includes(id)
+                  ? styles.vehicleListItemFavoriteSelected
+                  : ""
+              }`}
+            />
+          </button>
+        </div>
+        <div className={styles.vehicleListItemInfo}>
+          <SVGProvider id="rating" className={styles.vehicleListItemReviews} />
+          <p className={styles.vehicleListItemRating}>
+            {rating}({reviews} Reviews)
+          </p>
+          <SVGProvider
+            id="location"
+            className={styles.vehicleListItemLocationIcon}
+          />
+          <p className={styles.vehicleListItemLocation}>{location}</p>
+        </div>
+        <div>
+          <p className={styles.vehicleListItemDescription}>{description}</p>
+        </div>
+        <div className="vehicleListItemFilters">
+          <FilterItems
+            filters={filters}
+            className={styles.vehicleListItemFiltersItems}
+          />
+        </div>
+        <Button
+          text="Show more"
+          className={styles.vehicleListItemButton}
+          onClick={null}
+        />
+      </div>
+    </li>
+  );
+}
+
+function get_filters(vehicle) {
+  // (true/false)-based:
+  // AC, TV, bathroom, gas, kitchen, microwave, radio, refrigerator, water
+
+  // text-based:
+  // engine: diesel, petrol, hybrid
+  // transmission: automatic, manual
+
+  // There are no icons for filters below, so we're skipping them
+  // diesel, hybrid, manual
+
+  // Key: value, icon
+  // Key is the key in the vehicle object
+  // Value is the expected value in the vehicle object by the key
+  // Icon is the icon name to be used in the UI if the object's value matches the expected value
+  const matcher = {
+    transmission: { value: "automatic", icon: "automatic", text: "Automatic" },
+    engine: { value: "petrol", icon: "petrol", text: "Petrol" },
+    kitchen: { value: true, icon: "kitchen", text: "Kitchen" },
+    AC: { value: true, icon: "ac", text: "AC" },
+    TV: { value: true, icon: "tv", text: "TV" },
+    bathroom: { value: true, icon: "bathroom", text: "Bathroom" },
+    gas: { value: true, icon: "gas", text: "Gas" },
+    microwave: { value: true, icon: "microwave", text: "Microwave" },
+    radio: { value: true, icon: "radio", text: "Radio" },
+    refrigerator: { value: true, icon: "refrigerator", text: "Refrigerator" },
+    water: { value: true, icon: "water", text: "Water" },
+  };
+  let filters = [];
+  for (const key in matcher) {
+    const { value, icon, text } = matcher[key];
+    if (vehicle[key] === value) {
+      filters.push({ icon, text });
+    }
+  }
+  return filters;
+}
+
+function VehicleList() {
+  const page = useSelector((state) => state.filters.page);
+  const perPage = 4;
+  let vehicles = useSelector((state) => state.vehicles);
+  vehicles = Object.entries(vehicles);
+  vehicles = vehicles.slice(0, page * perPage);
+  vehicles = Object.fromEntries(vehicles);
+  return (
+    <ul className={styles.vehicleList}>
+      {Object.keys(vehicles).map((key) => {
+        const vehicle = vehicles[key];
+        if (!vehicle.id) return null;
+
+        const filters = get_filters(vehicle);
+        return (
+          <VehicleListItem
+            key={vehicle.id}
+            id={vehicle.id}
+            name={vehicle.name}
+            price={vehicle.price}
+            rating={vehicle.rating}
+            reviews={vehicle.reviews.length}
+            location={vehicle.location}
+            description={vehicle.description}
+            filters={filters}
+            img={vehicle.gallery[0].thumb}
+          />
+        );
+      })}
+    </ul>
+  );
+}
+
+function filterResults(results, filters) {
+  // "Local": endpoint result
+  // I.e. local value in equipment filters: expected value to be true
+  const bool_matcher = {
+    AC: "AC",
+    TV: "TV",
+    Kitchen: "kitchen",
+    Bathroom: "bathroom",
+  };
+  // Local, expected value
+  const text_matcher = {
+    Automatic: { key: "transmission", value: "automatic" },
+  };
+  // endpoint value: expected value
+  const vehicleTypeCheck = {
+    alcove: "Alcove",
+    fullyIntegrated: "Fully Integrated",
+    panelTruck: "Van",
+  };
+  const { location, type, equipment } = filters;
+  return results.filter((vehicle) => {
+    // Location check
+    if (location && vehicle.location !== location) return false;
+    // Bool checks
+    for (const key in bool_matcher) {
+      // If equipment has the equipment and the vehicle doesn't have the equipment, return false
+      if (equipment.includes(key) && !vehicle[bool_matcher[key]]) return false;
+    }
+    // Text checks
+    for (const key in text_matcher) {
+      const { key: vehicle_key, value } = text_matcher[key];
+      if (equipment.includes(key) && vehicle[vehicle_key] !== value)
+        return false;
+    }
+    // Vehicle type check
+    if (type.length > 0 && !type.includes(vehicleTypeCheck[vehicle.form])) {
+      return false;
+    }
+
+    return true;
+  });
+}
 
 function Filter({ data, icons_texts, addFilter, removeFilter, title }) {
   const dispatch = useDispatch();
@@ -84,10 +269,13 @@ function VehicleEquipment() {
 
 function Filters() {
   const dispatch = useDispatch();
+  const filters = useSelector((state) => state.filters);
   const searchFunc = () => {
     try {
       fetchCampers().then((res) => {
-        dispatch(setVehiclesList(res.data.items));
+        const result = filterResults(res.data.items, filters);
+        dispatch(resetPage());
+        dispatch(setVehiclesList(result));
       });
     } catch (error) {
       console.error(error);
@@ -115,7 +303,12 @@ function Location() {
   const location = useSelector((state) => state.filters.location);
 
   const handleSelect = async (value) => {
-    dispatch(setLocation(value));
+    // Reverse entire string by comma
+    let reversed = value.split(",").reverse();
+    // The endpoint api is different. Hack for Ukraine(remove Oblast from the array)
+    reversed = reversed.filter((item) => !item.includes("Oblast"));
+    reversed = reversed.join(", ").trim();
+    dispatch(setLocation(reversed));
   };
 
   return (
@@ -168,6 +361,7 @@ function Location() {
 }
 
 function Catalog() {
+  const dispatch = useDispatch();
   return (
     <div className={styles.catalog}>
       <div className={styles.catalogLeft}>
@@ -175,6 +369,12 @@ function Catalog() {
       </div>
       <div className={styles.catalogRight}>
         <VehicleList />
+        <button
+          className={styles.loadMoreButton}
+          onClick={() => dispatch(increasePage())}
+        >
+          Load more
+        </button>
       </div>
     </div>
   );

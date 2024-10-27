@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import listReducer from './vehiclesSlice';
+import vehiclesReducer from './vehiclesSlice';
 import filtersReducer from './filtersSlice';
+import favoriteVehiclesReducer from './favoriteVehiclesSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 
@@ -19,8 +20,8 @@ const filtersPersistConfig = {
   storage,
 };
 
-const persistedVehiclesReducer = persistReducer(vehiclesPersistConfig, listReducer.vehiclesReducer);
-const persistedFavoriteVehiclesReducer = persistReducer(favoriteVehiclesPersistConfig, listReducer.favoriteVehiclesReducer);
+const persistedVehiclesReducer = persistReducer(vehiclesPersistConfig, vehiclesReducer);
+const persistedFavoriteVehiclesReducer = persistReducer(favoriteVehiclesPersistConfig, favoriteVehiclesReducer);
 const persistedFiltersReducer = persistReducer(filtersPersistConfig, filtersReducer);
 
 
