@@ -1,0 +1,23 @@
+.info {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.reviews {
+  width: 16px;
+  height: 16px;
+}
+
+.rating,
+.location {
+  color: var(--main);
+  margin-left: 4px;
+}
+
+.locationIcon {
+  width: 16px;
+  height: 16px;
+  margin-left: 16px;
+}

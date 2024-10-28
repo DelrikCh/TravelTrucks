@@ -123,19 +123,6 @@
   margin-left: auto;
 }
 
-.vehicleListItemInfo {
-  display: flex;
-  align-items: center;
-  margin-top: 8px;
-  width: 100%;
-}
-
-.vehicleListItemRating,
-.vehicleListItemLocation {
-  color: var(--main);
-  margin-left: 4px;
-}
-
 .vehicleListItemDescription {
   margin-top: 24px;
   color: var(--text);
@@ -174,17 +161,6 @@
 .vehicleListItemFavoriteSelected {
   stroke: var(--button);
   stroke-width: 5%;
-}
-
-.vehicleListItemReviews {
-  width: 16px;
-  height: 16px;
-}
-
-.vehicleListItemLocationIcon {
-  width: 16px;
-  height: 16px;
-  margin-left: 16px;
 }
 
 .favoriteButton {

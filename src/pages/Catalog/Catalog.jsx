@@ -19,6 +19,7 @@ import { setVehiclesList } from "../../redux/vehiclesSlice";
 import { switchFavorite } from "../../redux/favoriteVehiclesSlice";
 import SVGProvider from "../../services/SVGProvider";
 import { useNavigate } from "react-router-dom";
+import VehicleRatingLocation from "../../components/VehicleRatingLocation/VehicleRatingLocation";
 
 function VehicleListItem({
   id,
@@ -59,17 +60,11 @@ function VehicleListItem({
             />
           </button>
         </div>
-        <div className={styles.vehicleListItemInfo}>
-          <SVGProvider id="rating" className={styles.vehicleListItemReviews} />
-          <p className={styles.vehicleListItemRating}>
-            {rating}({reviews} Reviews)
-          </p>
-          <SVGProvider
-            id="location"
-            className={styles.vehicleListItemLocationIcon}
-          />
-          <p className={styles.vehicleListItemLocation}>{location}</p>
-        </div>
+        <VehicleRatingLocation
+          rating={rating}
+          reviews={reviews}
+          location={location}
+        />
         <div>
           <p className={styles.vehicleListItemDescription}>{description}</p>
         </div>
