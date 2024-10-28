@@ -68,5 +68,48 @@
 }
 
 .horizontalLine {
+  margin: 24px 0px 0px 0px;
+}
+
+.features {
+  width: 631px;
+  height: 588px;
+  background-color: var(--inputs);
+  padding: 44px 52px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.details {
+  margin-top: 44px;
+}
+
+.vehicleData {
+  margin-top: auto;
+}
+
+.vehicleDataList {
   margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.vehicleDataItem {
+  display: flex;
+}
+
+.vehicleDataItemTitle, .vehicleDataItemData {
+  composes: body-2 from "../../index.css";
+  color: var(--main);
+}
+
+.vehicleDataItemData {
+  margin-left: auto;
+}
+
+.vehicleDataTitle {
+  composes: h3 from "../../index.css";
+  color: var(--main);
 }

@@ -1,10 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchCamper } from "../../services/apiService";
 import ReactLoading from "react-loading";
+
 import styles from "./VehicleDetails.module.css";
-import SVGProvider from "../../services/SVGProvider";
+import { fetchCamper } from "../../services/apiService";
+import { get_filters, prettify_filter_data } from "../../services/helpers";
 import VehicleRatingLocation from "../../components/VehicleRatingLocation/VehicleRatingLocation";
+import FilterItems from "../../components/FilterItems/FilterItems";
 
 function Header({ vehicle }) {
   return (
@@ -76,7 +78,34 @@ function HorizontalLine() {
 }
 
 function Features({ vehicle }) {
-  return <></>;
+  const filters = get_filters(vehicle);
+  const fields = {
+    Form: vehicle.form,
+    Length: vehicle.length,
+    Width: vehicle.width,
+    Height: vehicle.height,
+    Tank: vehicle.tank,
+    Consumption: vehicle.consumption,
+  };
+  return (
+    <div className={styles.features}>
+      <FilterItems filters={filters} />
+      <div className={styles.vehicleData}>
+        <h3 className={styles.vehicleDataTitle}>Vehicle details</h3>
+        <hr className={styles.horizontalLine} />
+        <ul className={styles.vehicleDataList}>
+          {Object.entries(fields).map(([key, value]) => (
+            <li key={key} className={styles.vehicleDataItem}>
+              <span className={styles.vehicleDataItemTitle}>{key}</span>
+              <span className={styles.vehicleDataItemData}>
+                {prettify_filter_data(key, value)}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
 }
 
 function Reviews({ vehicle }) {
@@ -84,10 +113,14 @@ function Reviews({ vehicle }) {
 }
 
 function Details({ vehicle, features }) {
-  return features ? (
-    <Features vehicle={vehicle} />
-  ) : (
-    <Reviews vehicle={vehicle} />
+  return (
+    <div className={styles.details}>
+      {features ? (
+        <Features vehicle={vehicle} />
+      ) : (
+        <Reviews vehicle={vehicle} />
+      )}
+    </div>
   );
 }
 
