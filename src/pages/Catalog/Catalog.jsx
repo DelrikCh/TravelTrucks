@@ -235,6 +235,7 @@ function Filters() {
   const filters = useSelector((state) => state.filters);
   const searchFunc = () => {
     try {
+      console.log("Searching");
       fetchCampers().then((res) => {
         const result = filterResults(res.data.items, filters);
         console.log(result);
@@ -246,6 +247,11 @@ function Filters() {
       console.error(error);
     }
   };
+  // If no vehicles in state.vehicles, then invoke searchFunc
+  // persistance takes 1 key, so <= 1
+  if (Object.keys(useSelector((state) => state.vehicles)).length <= 1) {
+    searchFunc();
+  }
   return (
     <>
       <ToastContainer />
