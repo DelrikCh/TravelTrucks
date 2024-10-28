@@ -31,7 +31,22 @@
   border-radius: 12px;
   border: none;
   background-color: var(--inputs);
-  padding: 16px 0px 16px 20px;
+  padding: 16px 0px 16px 46px;
+  position: relative;
+}
+
+.locationIcon {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  pointer-events: none;
+  color: var(--main);
+}
+
+.locationIconFaded {
+  color: var(--gray);
 }
 
 .locationSuggestionsContainer {

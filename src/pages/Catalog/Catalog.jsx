@@ -303,6 +303,12 @@ function Location() {
               {...getInputProps({ placeholder: "City" })}
               id="location"
             />
+            <SVGProvider
+              id="location"
+              className={`${styles.locationIcon} ${
+                location ? "" : styles.locationIconFaded
+              }`}
+            />
 
             {suggestions.length > 0 && (
               <div className={styles.locationSuggestionsContainer}>
