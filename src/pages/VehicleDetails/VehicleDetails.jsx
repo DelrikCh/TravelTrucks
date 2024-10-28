@@ -1,6 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ReactLoading from "react-loading";
+import * as Yup from "yup";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import styles from "./VehicleDetails.module.css";
 import { fetchCamper } from "../../services/apiService";
@@ -8,6 +11,8 @@ import { get_filters, prettify_filter_data } from "../../services/helpers";
 import VehicleRatingLocation from "../../components/VehicleRatingLocation/VehicleRatingLocation";
 import FilterItems from "../../components/FilterItems/FilterItems";
 import SVGProvider from "../../services/SVGProvider";
+import { Formik, Form, Field } from "formik";
+import Button from "../../components/Button/Button";
 
 function Header({ vehicle }) {
   return (
@@ -160,7 +165,7 @@ function Reviews({ vehicle }) {
 
 function Details({ vehicle, features }) {
   return (
-    <div className={styles.details}>
+    <div>
       {features ? (
         <Features vehicle={vehicle} />
       ) : (
@@ -170,7 +175,122 @@ function Details({ vehicle, features }) {
   );
 }
 
-function BookForm({ vehicle }) {}
+function BookFormImpl({ vehicleId }) {
+  const minDate = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000);
+  const initialValues = {
+    name: "",
+    email: "",
+    date: minDate.toISOString().split("T")[0],
+    comment: "",
+  };
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("Name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    // Date should be at tomorrow from now, we can't really book a campervan for today
+    date: Yup.date()
+      .min(
+        minDate,
+        `Invalid date. The booking date should be ${
+          minDate.toISOString().split("T")[0]
+        } or later`
+      )
+      .typeError("Invalid date format")
+      .required("Required"),
+    comment: Yup.string(),
+  });
+
+  // TODO: Remove Stub once backend is implemented
+  const backendStub = {
+    send: (values, vehicleId) => {
+      console.log("Booking request sent", values, vehicleId);
+    },
+  };
+
+  const validateValues = async (values) => {
+    try {
+      await validationSchema.validate(values, { abortEarly: false });
+    } catch (err) {
+      // If validation fails, create an object to hold the error messages
+      const validationErrors = {};
+      err.inner.forEach((error) => {
+        validationErrors[error.path] = error.message;
+      });
+      // Return the validation errors
+      return validationErrors;
+    }
+  };
+
+  const handleSubmit = async (values, { resetForm, setErrors }) => {
+    // Validate the values before proceeding with submission
+    const validationErrors = await validateValues(values);
+    if (validationErrors) {
+      // Set the errors in Formik if there are validation issues
+      setErrors(validationErrors);
+      Object.values(validationErrors).forEach((message) => {
+        toast.error(message); // Show each error as a toast notification
+      });
+      return; // Prevent form submission
+    }
+
+    // Proceed with the successful form submission logic
+    toast.success("Your booking request has been sent!");
+    backendStub.send(values, vehicleId);
+    resetForm();
+  };
+
+  return (
+    <div>
+      <ToastContainer />
+      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Form className={styles.bookFormImpl}>
+          <Field
+            type="text"
+            name="name"
+            placeholder="Name*"
+            className={styles.bookField}
+          />
+
+          <Field
+            type="text"
+            name="email"
+            placeholder="Email*"
+            className={styles.bookField}
+          />
+
+          <Field
+            type="date"
+            name="date"
+            placeholder="Booking date*"
+            className={styles.bookField}
+            min={minDate}
+          />
+
+          <Field
+            as="textarea"
+            name="comment"
+            placeholder="Comment"
+            className={`${styles.bookField} ${styles.bookFieldComment}`}
+          />
+          <Button text="Send" type="submit" className={styles.bookFormButton} />
+        </Form>
+      </Formik>
+    </div>
+  );
+}
+
+function BookForm({ vehicleId }) {
+  return (
+    <div className={styles.bookForm}>
+      <div className={styles.bookFormHeader}>
+        <h3 className={styles.bookFormTitle}>Book your campervan now</h3>
+        <span className={styles.bookFormText}>
+          Stay connected! We are always ready to help you.
+        </span>
+      </div>
+      <BookFormImpl vehicleId={vehicleId} />
+    </div>
+  );
+}
 
 function VehicleDetails() {
   const vehicleId = useParams().id;
@@ -200,11 +320,13 @@ function VehicleDetails() {
       <div>
         <SubpageChoserButtons state={buttonState} setState={setButtonState} />
         <HorizontalLine />
-        <Details
-          vehicle={vehicle}
-          features={buttonState === "features" ? true : false}
-        />
-        <BookForm vehicle={vehicle} />
+        <div className={styles.belowHorizontalLine}>
+          <Details
+            vehicle={vehicle}
+            features={buttonState === "features" ? true : false}
+          />
+          <BookForm vehicleId={vehicle.id} />
+        </div>
       </div>
     </div>
   );

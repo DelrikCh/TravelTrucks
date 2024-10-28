@@ -71,7 +71,8 @@
   margin: 24px 0px 0px 0px;
 }
 
-.features, .reviews {
+.features,
+.reviews {
   width: 631px;
   height: 588px;
   border-radius: 10px;
@@ -86,10 +87,6 @@
 
 .reviews {
   gap: 44px;
-}
-
-.details {
-  margin-top: 44px;
 }
 
 .vehicleData {
@@ -107,7 +104,8 @@
   display: flex;
 }
 
-.vehicleDataItemTitle, .vehicleDataItemData {
+.vehicleDataItemTitle,
+.vehicleDataItemData {
   composes: body-2 from "../../index.css";
   color: var(--main);
 }
@@ -155,7 +153,8 @@
   color: var(--text);
 }
 
-.ratingStars, .ratingFadedStars {
+.ratingStars,
+.ratingFadedStars {
   width: 16px;
   height: 16px;
 }
@@ -171,4 +170,62 @@
 .ratingStarsList {
   display: flex;
   gap: 4px;
+}
+
+.bookForm {
+  display: flex;
+  flex-direction: column;
+  width: 641px;
+  padding: 44px 57px;
+  border: 1px solid var(--gray-light);
+  border-radius: 10px;
+  gap: 24px;
+}
+
+.belowHorizontalLine {
+  display: flex;
+  flex-direction: row;
+  margin-top: 44px;
+  gap: 40px;
+}
+
+.bookFormHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bookFormTitle {
+  composes: h3 from "../../index.css";
+  color: var(--main);
+}
+
+.bookFormText {
+  color: var(--gray);
+}
+
+.bookFormImpl {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.bookFormButton {
+  width: 166px;
+  height: 56px;
+  align-self: center;
+  margin-top: 10px; /* 24px - gap(14px) */
+}
+
+.bookField {
+  width: 100%;
+  width: Fixed (527px) px;
+  border: none;
+  border-radius: 12px;
+  background-color: var(--inputs);
+  padding: 18px;
+}
+
+.bookFieldComment {
+  height: 118px;
 }

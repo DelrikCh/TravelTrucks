@@ -21,6 +21,7 @@ import SVGProvider from "../../services/SVGProvider";
 import { get_filters } from "../../services/helpers";
 import { useNavigate } from "react-router-dom";
 import VehicleRatingLocation from "../../components/VehicleRatingLocation/VehicleRatingLocation";
+import { toast, ToastContainer } from "react-toastify";
 
 function VehicleListItem({
   id,
@@ -241,11 +242,13 @@ function Filters() {
         dispatch(setVehiclesList(result));
       });
     } catch (error) {
+      toast.error("Error fetching vehicles");
       console.error(error);
     }
   };
   return (
     <>
+      <ToastContainer />
       <Location />
       <p className={styles.filtersLabel}>Filters</p>
       <div id="filters" className={styles.filters}>
