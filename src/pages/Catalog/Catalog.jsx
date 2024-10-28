@@ -235,10 +235,8 @@ function Filters() {
   const filters = useSelector((state) => state.filters);
   const searchFunc = () => {
     try {
-      console.log("Searching");
       fetchCampers().then((res) => {
         const result = filterResults(res.data.items, filters);
-        console.log(result);
         dispatch(resetPage());
         dispatch(setVehiclesList(result));
       });
