@@ -71,14 +71,21 @@
   margin: 24px 0px 0px 0px;
 }
 
-.features {
+.features, .reviews {
   width: 631px;
   height: 588px;
-  background-color: var(--inputs);
-  padding: 44px 52px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+}
+
+.features {
+  background-color: var(--inputs);
+  padding: 44px 52px;
+}
+
+.reviews {
+  gap: 44px;
 }
 
 .details {
@@ -112,4 +119,56 @@
 .vehicleDataTitle {
   composes: h3 from "../../index.css";
   color: var(--main);
+}
+
+.reviewPhoto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--badges);
+  composes: h2 from "../../index.css";
+  color: var(--button);
+}
+
+.reviewHeader {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.reviewName {
+  composes: body-2 from "../../index.css";
+  color: var(--main);
+}
+
+.reviewNameRating {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reviewDescription {
+  margin-top: 16px;
+  color: var(--text);
+}
+
+.ratingStars, .ratingFadedStars {
+  width: 16px;
+  height: 16px;
+}
+
+.ratingStars {
+  color: var(--rating);
+}
+
+.ratingFadedStars {
+  color: var(--badges);
+}
+
+.ratingStarsList {
+  display: flex;
+  gap: 4px;
 }

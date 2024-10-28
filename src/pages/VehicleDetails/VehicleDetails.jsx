@@ -7,6 +7,7 @@ import { fetchCamper } from "../../services/apiService";
 import { get_filters, prettify_filter_data } from "../../services/helpers";
 import VehicleRatingLocation from "../../components/VehicleRatingLocation/VehicleRatingLocation";
 import FilterItems from "../../components/FilterItems/FilterItems";
+import SVGProvider from "../../services/SVGProvider";
 
 function Header({ vehicle }) {
   return (
@@ -108,8 +109,53 @@ function Features({ vehicle }) {
   );
 }
 
+function RatingStars({ rating }) {
+  const faded_stars = 5 - rating;
+  return (
+    <ul className={styles.ratingStarsList}>
+      {[...Array(rating)].map((_, index) => (
+        <li key={index}>
+          <SVGProvider id="rating" className={styles.ratingStars} />
+        </li>
+      ))}
+      {[...Array(faded_stars)].map((_, index) => (
+        <li key={rating + index}>
+          <SVGProvider id="rating" className={styles.ratingFadedStars} />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function Review({ name, rating, description }) {
+  return (
+    <div>
+      <div className={styles.reviewHeader}>
+        <div className={styles.reviewPhoto}>{name[0]}</div>
+        <div className={styles.reviewNameRating}>
+          <span className={styles.reviewName}>{name}</span>
+          <RatingStars rating={rating} />
+        </div>
+      </div>
+      <p className={styles.reviewDescription}>{description}</p>
+    </div>
+  );
+}
+
 function Reviews({ vehicle }) {
-  return <></>;
+  return (
+    <ul className={styles.reviews}>
+      {vehicle.reviews.map((review, index) => (
+        <li key={index}>
+          <Review
+            name={review.reviewer_name}
+            rating={review.reviewer_rating}
+            description={review.comment}
+          />
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 function Details({ vehicle, features }) {
