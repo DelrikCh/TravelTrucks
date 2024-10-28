@@ -233,7 +233,7 @@ function BookFormImpl({ vehicleId }) {
     }
 
     // Proceed with the successful form submission logic
-    toast.success("Your booking request has been sent!");
+    toast.success("You have successfully booked your campervan!");
     backendStub.send(values, vehicleId);
     resetForm();
   };
